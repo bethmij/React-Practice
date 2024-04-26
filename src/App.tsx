@@ -21,7 +21,7 @@ import ExpenseForm from "@/expense-tracker/expenseForm.tsx";
 // const handleItem = () => {
 //     console.log(item)
 // }
-export const categories = ['Groceries','Utilities','Entertainment']
+export const categories = ['Groceries','Utilities','Entertainment'] as const;
 
 export default function App() {
 
