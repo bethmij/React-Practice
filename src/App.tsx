@@ -12,7 +12,7 @@
 
 // import ExpenseTable from "@/expense-tracker/expenseTable.tsx";
 import {useEffect, useState} from "react";
-import axios from "axios";
+import axios, {CanceledError} from "axios";
 // import ExpensesFilter from "@/expense-tracker/expensesFilter.tsx";
 // import ExpenseForm from "@/expense-tracker/expenseForm.tsx";
 
@@ -29,12 +29,28 @@ interface User {
 
 export default function App() {
 
+    const controller = new AbortController()
+
     const [user, setUser] = useState<User[]>()
+    const [error, setError] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
+
+        setIsLoading(true)
         axios.get<User[]>("https://jsonplaceholder.typicode.com/users")
-            .then(res => setUser(res.data))
-    })
+            .then(res => {
+                setUser(res.data)
+                setIsLoading(false)
+            })
+            .catch(err => {
+                if (err instanceof CanceledError) return;
+                setError(err.message)
+                setIsLoading(false)
+            })
+
+        return () => controller.abort();
+    }, [])
 
     // const [categories, setCategory] = useState('')
     //
@@ -55,7 +71,9 @@ export default function App() {
 
     return (
         <>
-            {user?.map( user => <li key={user.id}>{user.name}</li>)}
+            {error && <p className='text-danger'>{error}</p>}
+            {isLoading && <div className="spinner-border"></div>}
+            {user?.map(user => <li key={user.id}>{user.name}</li>)}
             {/*<IoHome color={"red"} size={40}/>*/}
             {/*<div><Message items={listName} heading="Cities" onSelectItem={handleItem}></Message></div>*/}
             {/*{alertVisible && <Alert1 onClick={() =>setAlertVisibility(false)}><strong>Holy guacamole!</strong> You should check in on some of those fields below.</Alert1>}*/}
