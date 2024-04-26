@@ -21,7 +21,7 @@ import ExpenseForm from "@/expense-tracker/expenseForm.tsx";
 // const handleItem = () => {
 //     console.log(item)
 // }
-export const categories = ['Groceries','Utilities','Entertainment'] as const;
+
 
 export default function App() {
 
@@ -65,7 +65,7 @@ export default function App() {
             {/*</Expandable>*/}
             {/*<Form></Form>*/}
             {/*<Button variant={"outline"} className={"btn btn-outline-danger"}>Click Me</Button>*/}
-            <ExpenseForm></ExpenseForm>
+            <ExpenseForm onSubmit={expenses => setItems([...items, {...expenses, id: 2}])}></ExpenseForm>
             <ExpensesFilter onSelectCategory={(category) => setCategory(category)}></ExpensesFilter>
             <ExpenseTable items={selectItem} onClick={(id) => setItems(items.filter(e => e.id !== id))}></ExpenseTable>
 
