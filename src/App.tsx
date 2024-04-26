@@ -73,7 +73,9 @@ export default function App() {
         <>
             {error && <p className='text-danger'>{error}</p>}
             {isLoading && <div className="spinner-border"></div>}
-            {user?.map(user => <li key={user.id}>{user.name}</li>)}
+            <ul className="list-group w-50">
+                {user?.map(user => <li className="list-group-item d-flex justify-content-between" key={user.id}>{user.name} <button className="btn btn-outline-danger">Delete</button></li>)}
+            </ul>
             {/*<IoHome color={"red"} size={40}/>*/}
             {/*<div><Message items={listName} heading="Cities" onSelectItem={handleItem}></Message></div>*/}
             {/*{alertVisible && <Alert1 onClick={() =>setAlertVisibility(false)}><strong>Holy guacamole!</strong> You should check in on some of those fields below.</Alert1>}*/}
