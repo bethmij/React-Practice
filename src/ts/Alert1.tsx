@@ -5,7 +5,7 @@ interface Props {
     onClick: () => void
 }
 
-export default function Alert({children, onClick}: Props) {
+export default function Alert1({children, onClick}: Props) {
     return (
         <div className="alert alert-warning alert-dismissible fade show" role="alert">
             {children}
