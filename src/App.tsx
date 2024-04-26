@@ -31,7 +31,7 @@ export default function App() {
 
     const controller = new AbortController()
 
-    const [user, setUser] = useState<User[]>()
+    const [users, setUser] = useState<User[]>()
     const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
@@ -51,6 +51,18 @@ export default function App() {
 
         return () => controller.abort();
     }, [])
+
+    const deleteUser = (user:User) => {
+        const originalUser = [...users]
+
+        setUser(users?.filter(u => u.id !== user.id))
+
+        axios.delete("https://jsonplaceholder.typicode.com/users/" + user.id)
+            .catch(err => {
+                setError(err.message)
+                setUser(originalUser)
+            })
+    }
 
     // const [categories, setCategory] = useState('')
     //
@@ -74,7 +86,10 @@ export default function App() {
             {error && <p className='text-danger'>{error}</p>}
             {isLoading && <div className="spinner-border"></div>}
             <ul className="list-group w-50">
-                {user?.map(user => <li className="list-group-item d-flex justify-content-between" key={user.id}>{user.name} <button className="btn btn-outline-danger">Delete</button></li>)}
+                {users?.map(user => <li className="list-group-item d-flex justify-content-between"
+                                       key={user.id}>{user.name}
+                    <button className="btn btn-outline-danger" onClick={()=> deleteUser(user)}>Delete</button>
+                </li>)}
             </ul>
             {/*<IoHome color={"red"} size={40}/>*/}
             {/*<div><Message items={listName} heading="Cities" onSelectItem={handleItem}></Message></div>*/}
