@@ -66,7 +66,7 @@ export default function App() {
             {/*<Button variant={"outline"} className={"btn btn-outline-danger"}>Click Me</Button>*/}
             <ExpensesFilter onSelectCategory={(category) => setCategory(category)}></ExpensesFilter>
             <ExpenseTable items={selectItem} onClick={(id) => setItems(items.filter(e => e.id !== id))}></ExpenseTable>
-            {/*<button>Click me</button>*/}
+
         </>
     )
 }
