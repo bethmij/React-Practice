@@ -11,10 +11,8 @@
 // import { Button } from "@/components/ui/button"
 
 import ExpenseTable from "@/expense-tracker/expenseTable.tsx";
-
-
-
-
+import {useState} from "react";
+import ExpensesFilter from "@/expense-tracker/expensesFilter.tsx";
 
 
 // const listName = ["one", "two", "three", "four", "five"]
@@ -24,18 +22,24 @@ import ExpenseTable from "@/expense-tracker/expenseTable.tsx";
 // }
 
 
-
-
-
 export default function App() {
 
+    const [categories, setCategory] = useState('')
+
+    const [items, setItems] = useState([
+        {id: 1, description: "aaa", amount: 10, category: "Utilities"},
+        {id: 2, description: "bbb", amount: 10, category: "Utilities"},
+        {id: 3, description: "ccc", amount: 10, category: "Utilities"},
+        {id: 4, description: "ddd", amount: 10, category: "Utilities"}
+    ])
+
+
+    const selectItem = (categories) ? items.filter(item => item.category === categories) : items
+
+
     // const [alertVisible, setAlertVisibility] = useState(false)
-    const items = [
-        {id:1, description:"aaa", amount:10, category:"utilities"},
-        {id:2, description:"bbb", amount:10, category:"utilities"},
-        {id:3, description:"ccc", amount:10, category:"utilities"},
-        {id:4, description:"ddd", amount:10, category:"utilities"}
-    ]
+
+    // const selectItems = (category!==)
 
     return (
         <>
@@ -60,7 +64,8 @@ export default function App() {
             {/*</Expandable>*/}
             {/*<Form></Form>*/}
             {/*<Button variant={"outline"} className={"btn btn-outline-danger"}>Click Me</Button>*/}
-            <ExpenseTable items={items}></ExpenseTable>
+            <ExpensesFilter onSelectCategory={(category) => setCategory(category)}></ExpensesFilter>
+            <ExpenseTable items={selectItem} onClick={(id) => setItems(items.filter(e => e.id !== id))}></ExpenseTable>
             {/*<button>Click me</button>*/}
         </>
     )

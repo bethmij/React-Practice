@@ -11,7 +11,8 @@ import {Button} from "@/components/ui/button.tsx";
 
 
 interface Prop{
-    items: Items[]
+    items: Items[];
+    onClick: (id:number) => void;
 }
 
 interface Items{
@@ -21,7 +22,7 @@ interface Items{
     category:string;
 }
 
-export default function ExpenseTable({items}:Prop) {
+export default function ExpenseTable({items, onClick}:Prop) {
     return (
         <>
             <Table className="w-25 p-3">
@@ -40,7 +41,7 @@ export default function ExpenseTable({items}:Prop) {
                             <TableCell className="font-medium">{items.description}</TableCell>
                             <TableCell className="font-medium">{items.amount}</TableCell>
                             <TableCell className="font-medium">{items.category}</TableCell>
-                            <TableCell className="text-right">{<Button variant={"outline"} className={"btn btn-outline-danger"}>Delete</Button>}</TableCell>
+                            <TableCell className="text-right">{<Button onClick={() => onClick(items.id)} variant={"outline"} className={"btn btn-outline-danger"}>Delete</Button>}</TableCell>
                         </TableRow>
                     )}
 
