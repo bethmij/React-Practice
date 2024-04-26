@@ -8,7 +8,7 @@ import {useState} from "react";
 // children:string;
 // onClick: () => void
 // }
-export default function Button() {
+export default function Button1() {
 
     // const [status, setStatus] = useState(false)
 
