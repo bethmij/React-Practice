@@ -10,10 +10,11 @@
 
 // import { Button } from "@/components/ui/button"
 
-import ExpenseTable from "@/expense-tracker/expenseTable.tsx";
-import {useState} from "react";
-import ExpensesFilter from "@/expense-tracker/expensesFilter.tsx";
-import ExpenseForm from "@/expense-tracker/expenseForm.tsx";
+// import ExpenseTable from "@/expense-tracker/expenseTable.tsx";
+import {useEffect, useState} from "react";
+import axios from "axios";
+// import ExpensesFilter from "@/expense-tracker/expensesFilter.tsx";
+// import ExpenseForm from "@/expense-tracker/expenseForm.tsx";
 
 
 // const listName = ["one", "two", "three", "four", "five"]
@@ -21,21 +22,31 @@ import ExpenseForm from "@/expense-tracker/expenseForm.tsx";
 // const handleItem = () => {
 //     console.log(item)
 // }
-
+interface User {
+    id: number,
+    name: string
+}
 
 export default function App() {
 
-    const [categories, setCategory] = useState('')
+    const [user, setUser] = useState<User[]>()
 
-    const [items, setItems] = useState([
-        {id: 1, description: "aaa", amount: 10, category: "Utilities"},
-        {id: 2, description: "bbb", amount: 10, category: "Utilities"},
-        {id: 3, description: "ccc", amount: 10, category: "Utilities"},
-        {id: 4, description: "ddd", amount: 10, category: "Utilities"}
-    ])
+    useEffect(() => {
+        axios.get<User[]>("https://jsonplaceholder.typicode.com/users")
+            .then(res => setUser(res.data))
+    })
+
+    // const [categories, setCategory] = useState('')
+    //
+    // const [items, setItems] = useState([
+    //     {id: 1, description: "aaa", amount: 10, category: "Utilities"},
+    //     {id: 2, description: "bbb", amount: 10, category: "Utilities"},
+    //     {id: 3, description: "ccc", amount: 10, category: "Utilities"},
+    //     {id: 4, description: "ddd", amount: 10, category: "Utilities"}
+    // ])
 
 
-    const selectItem = (categories) ? items.filter(item => item.category === categories) : items
+    // const selectItem = (categories) ? items.filter(item => item.category === categories) : items
 
 
     // const [alertVisible, setAlertVisibility] = useState(false)
@@ -44,7 +55,7 @@ export default function App() {
 
     return (
         <>
-
+            {user?.map( user => <li key={user.id}>{user.name}</li>)}
             {/*<IoHome color={"red"} size={40}/>*/}
             {/*<div><Message items={listName} heading="Cities" onSelectItem={handleItem}></Message></div>*/}
             {/*{alertVisible && <Alert1 onClick={() =>setAlertVisibility(false)}><strong>Holy guacamole!</strong> You should check in on some of those fields below.</Alert1>}*/}
@@ -65,9 +76,9 @@ export default function App() {
             {/*</Expandable>*/}
             {/*<Form></Form>*/}
             {/*<Button variant={"outline"} className={"btn btn-outline-danger"}>Click Me</Button>*/}
-            <ExpenseForm onSubmit={expenses => setItems([...items, {...expenses, id: 2}])}></ExpenseForm>
-            <ExpensesFilter onSelectCategory={(category) => setCategory(category)}></ExpensesFilter>
-            <ExpenseTable items={selectItem} onClick={(id) => setItems(items.filter(e => e.id !== id))}></ExpenseTable>
+            {/*<ExpenseForm onSubmit={expenses => setItems([...items, {...expenses, id: 2}])}></ExpenseForm>*/}
+            {/*<ExpensesFilter onSelectCategory={(category) => setCategory(category)}></ExpensesFilter>*/}
+            {/*<ExpenseTable items={selectItem} onClick={(id) => setItems(items.filter(e => e.id !== id))}></ExpenseTable>*/}
 
         </>
     )
