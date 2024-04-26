@@ -13,6 +13,7 @@
 import ExpenseTable from "@/expense-tracker/expenseTable.tsx";
 import {useState} from "react";
 import ExpensesFilter from "@/expense-tracker/expensesFilter.tsx";
+import ExpenseForm from "@/expense-tracker/expenseForm.tsx";
 
 
 // const listName = ["one", "two", "three", "four", "five"]
@@ -20,7 +21,7 @@ import ExpensesFilter from "@/expense-tracker/expensesFilter.tsx";
 // const handleItem = () => {
 //     console.log(item)
 // }
-
+export const categories = ['Groceries','Utilities','Entertainment']
 
 export default function App() {
 
@@ -64,6 +65,7 @@ export default function App() {
             {/*</Expandable>*/}
             {/*<Form></Form>*/}
             {/*<Button variant={"outline"} className={"btn btn-outline-danger"}>Click Me</Button>*/}
+            <ExpenseForm></ExpenseForm>
             <ExpensesFilter onSelectCategory={(category) => setCategory(category)}></ExpensesFilter>
             <ExpenseTable items={selectItem} onClick={(id) => setItems(items.filter(e => e.id !== id))}></ExpenseTable>
 

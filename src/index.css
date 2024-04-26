@@ -71,6 +71,7 @@
       @apply border-border;
     }
     body {
+      padding-left: 25px;
       @apply bg-background text-foreground;
     }
   }
